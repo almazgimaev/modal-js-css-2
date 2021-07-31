@@ -1,0 +1,2 @@
+
+const addList = $.modal()
