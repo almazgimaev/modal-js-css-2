@@ -33,6 +33,7 @@ function js() {
   return src([
     'app/src/scripts/base.js',
     'app/src/scripts/plugins/modal.js',
+    'app/src/scripts/plugins/add.js',
     'app/src/scripts/plugins/confirm.js',
     'app/src/scripts/script.js'
   ])

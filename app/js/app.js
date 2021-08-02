@@ -70,6 +70,9 @@ $.modal = function(options) {
       $modal.classList.add('hide')
       setTimeout(() => {
         closing = false
+        if (typeof options.onClose === 'function') {
+          options.onClose()
+        }
         $modal.classList.remove('hide')
       }, 200);
     }
@@ -92,6 +95,33 @@ $.modal = function(options) {
   })
 }
 
+$.addList = function(options) {
+  return new Promise((resolve, reject) => {
+    const modal = $.modal({
+      title: 'Добавление задачи',
+      content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
+      onClose() {
+        modal.destroy()
+      },
+      footerButtons: [
+        {text: 'Добавить', type: 'primary', handler() {
+          // TODO:
+          console.log('здесь код дял добавления задачи в DOM');
+          resolve()
+        }},
+        {text: 'Отмена', type: 'secondary', handler() {
+          modal.close()
+          reject()
+        }}
+      ]
+    })
+
+
+    setTimeout(() => {
+      modal.open()
+    }, 100);
+  })  
+}
 $.deleteList = function(options) {
   return new Promise((resolve, reject) => {
     const modal = $.modal({
@@ -120,19 +150,19 @@ $.deleteList = function(options) {
   })  
 }
 
-const addList = $.modal({
-  title: 'Добавить задание',
-  content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
-  footerButtons: [
-    {text: 'Добавить', type: 'primary', handler() {
-      // TODO:
-      console.log('здесь код дял добавления задачи в DOM');
-    }},
-    {text: 'Отмена', type: 'secondary', handler() {
-      addList.close()
-    }}
-  ]
-})
+// const addList = $.modal({
+//   title: 'Добавить задание',
+//   content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
+//   footerButtons: [
+//     {text: 'Добавить', type: 'primary', handler() {
+//       // TODO:
+//       console.log('здесь код дял добавления задачи в DOM');
+//     }},
+//     {text: 'Отмена', type: 'secondary', handler() {
+//       addList.close()
+//     }}
+//   ]
+// })
 
 
 document.addEventListener('click', event => {
@@ -142,7 +172,17 @@ document.addEventListener('click', event => {
   
   if(btnType === 'add') {
     event.preventDefault()
-    addList.open()
+    // addList.open()
+    $.addList()
+      .then(() => {
+        // TODO:
+        console.log('adding...');
+      })
+      .catch(() => {
+        // TODO:
+        console.log('canceled.');
+      })
+
   } else if (btnType === "delete") {
     event.preventDefault()
     $.deleteList()

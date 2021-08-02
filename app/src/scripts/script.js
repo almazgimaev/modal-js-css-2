@@ -1,17 +1,17 @@
 
-const addList = $.modal({
-  title: 'Добавить задание',
-  content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
-  footerButtons: [
-    {text: 'Добавить', type: 'primary', handler() {
-      // TODO:
-      console.log('здесь код дял добавления задачи в DOM');
-    }},
-    {text: 'Отмена', type: 'secondary', handler() {
-      addList.close()
-    }}
-  ]
-})
+// const addList = $.modal({
+//   title: 'Добавить задание',
+//   content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
+//   footerButtons: [
+//     {text: 'Добавить', type: 'primary', handler() {
+//       // TODO:
+//       console.log('здесь код дял добавления задачи в DOM');
+//     }},
+//     {text: 'Отмена', type: 'secondary', handler() {
+//       addList.close()
+//     }}
+//   ]
+// })
 
 
 document.addEventListener('click', event => {
@@ -21,7 +21,17 @@ document.addEventListener('click', event => {
   
   if(btnType === 'add') {
     event.preventDefault()
-    addList.open()
+    // addList.open()
+    $.addList()
+      .then(() => {
+        // TODO:
+        console.log('adding...');
+      })
+      .catch(() => {
+        // TODO:
+        console.log('canceled.');
+      })
+
   } else if (btnType === "delete") {
     event.preventDefault()
     $.deleteList()

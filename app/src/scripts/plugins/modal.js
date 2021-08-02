@@ -69,6 +69,9 @@ $.modal = function(options) {
       $modal.classList.add('hide')
       setTimeout(() => {
         closing = false
+        if (typeof options.onClose === 'function') {
+          options.onClose()
+        }
         $modal.classList.remove('hide')
       }, 200);
     }
