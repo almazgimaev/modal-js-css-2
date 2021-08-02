@@ -9,50 +9,39 @@
   
 </head>
 <body>
-  <div class="gmodal"> 
-    
-    <div class="modal-overlay" data-close="true">
-      <div class="modal-window" style="width: 500px">
-        <div class="modal-header">
-          <span class="modal-title"> Window </span>
-         <span class="modal-close" data-close="true">&times;</span>
-        </div>
-        <div class="modal-body" data-content>
-          <button class="btn">ads</button>
-        </div>
-        <div class="modal-footer">
-          <button class="btn"></button>
-        </div>
-      </div>
-    </div>
-
-  </div>  
+  
   <a href="#" class="logo-a"><div class="container-fluid bg-secondary text-light pt-2 pb-2 logo-text"><h3>start</h3></div></a>
-    <div class="container mt-3">
-      <h1>This is my to-do list.</h1>
-      <p>lets try it!</p>
-    <div class="row">
-      <div class="col-12">
-        <button type="button" class="btn btn-primary btn-lg">Добавить</button>
-        <button type="button" class="btn btn-secondary btn-lg">Удалить</button>
-      </div>
-    </div>
-    <div class="row"><div class="col space">
-      <p class="text-black-50">попробуй добавить пункты, выполнить их и удалить ненужные пункты.</p>
-    </div></div>
-    
-    <div class="row check-list">
-      <div class="col-11 offset-1 offset-lg-0 offset-md-0">
-        <div class="form-check lined">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, voluptas quae.
-          </label>
-        </div>
-      </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-1 space"></div>
+      <div class="col-12"><h1>Hi there!</h1></div>
+      <div class="col-12"><span>Try it!</spanp></div>
+      <div class="col-12" style="display: flex; align-items: center;"><span class="h6">Добавляй, выполняй и удаляй!</span></div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-primary" data-btn="add">Добавить</button>
+        <button class="btn btn-danger" data-btn="delete">Удалить</button>
+      </div>
+      <div class="col-1 space"></div>
+    </div>
+    <div class="row">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+          Задача №1. Помыть полы
+        </label>
+      </div>
     </div>
   </div>
+
+
+
+
+
+  
+    
   <script src="js/app.js"></script>
 </body>
 </html>
