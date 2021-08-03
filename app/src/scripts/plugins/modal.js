@@ -1,3 +1,7 @@
+let tasks = []
+let countTask = 0
+
+
 Element.prototype.appendAfter = function(element) {
   element.parentNode.insertBefore(this, element.nextSibling)
 }

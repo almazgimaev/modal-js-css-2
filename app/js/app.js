@@ -1,4 +1,8 @@
 let $ = {}
+let tasks = []
+let countTask = 0
+
+
 Element.prototype.appendAfter = function(element) {
   element.parentNode.insertBefore(this, element.nextSibling)
 }
@@ -95,19 +99,31 @@ $.modal = function(options) {
   })
 }
 
+
+
+
 $.addList = function(options) {
   return new Promise((resolve, reject) => {
     const modal = $.modal({
       title: 'Добавление задачи',
-      content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
+      content: `<textarea id="inputTask" class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
       onClose() {
         modal.destroy()
       },
       footerButtons: [
         {text: 'Добавить', type: 'primary', handler() {
           // TODO:
-          console.log('здесь код дял добавления задачи в DOM');
+          const  inputTask = document.querySelector('#inputTask')
+          
+          const addTask = () => {
+            const currentCount = countTask
+            const newTask = {idCheck: currentCount, text: inputTask.value}
+            tasks.push(newTask)
+          }
+          countTask++;
+          addTask()
           resolve()
+          modal.close()
         }},
         {text: 'Отмена', type: 'secondary', handler() {
           modal.close()
@@ -151,18 +167,39 @@ $.deleteList = function(options) {
 }
 
 // const addList = $.modal({
-//   title: 'Добавить задание',
-//   content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
-//   footerButtons: [
-//     {text: 'Добавить', type: 'primary', handler() {
-//       // TODO:
-//       console.log('здесь код дял добавления задачи в DOM');
-//     }},
-//     {text: 'Отмена', type: 'secondary', handler() {
-//       addList.close()
-//     }}
-//   ]
-// })
+  //   title: 'Добавить задание',
+  //   content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
+  //   footerButtons: [
+    //     {text: 'Добавить', type: 'primary', handler() {
+      //       // TODO:
+      //       console.log('здесь код дял добавления задачи в DOM');
+      //     }},
+      //     {text: 'Отмена', type: 'secondary', handler() {
+        //       addList.close()
+        //     }}
+        //   ]
+        // })
+        
+
+
+const toHtml = task => `
+  <div class="form-check"  id="${task.idCheck}">
+    <input class="form-check-input" type="checkbox" value="">
+    <label class="form-check-label" for="flexCheckDefault">
+      ${task.text}
+    </label>
+  </div>
+`
+
+
+
+function render() {
+  const html = tasks.map(toHtml).join('')
+  document.querySelector('#taskList').innerHTML = html
+}
+
+// render()
+
 
 
 document.addEventListener('click', event => {
@@ -176,13 +213,12 @@ document.addEventListener('click', event => {
     $.addList()
       .then(() => {
         // TODO:
-        console.log('adding...');
+        render()
       })
       .catch(() => {
         // TODO:
-        console.log('canceled.');
+        console.log('canceledff.');
       })
-
   } else if (btnType === "delete") {
     event.preventDefault()
     $.deleteList()
@@ -196,3 +232,4 @@ document.addEventListener('click', event => {
       })
   }
 })
+
