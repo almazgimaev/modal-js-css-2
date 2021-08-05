@@ -1,5 +1,11 @@
-let tasks = []
-let countTask = 0
+let tasks = [
+  {idCheck: 1, text: "dsfasfdsdafsfd"},
+  {idCheck: 2, text: "ыыцук"},
+  {idCheck: 3, text: "фыаыв"},
+  {idCheck: 4, text: "цкк3а3а"},
+]
+let countTask = tasks[tasks.length - 1].idCheck || 0
+console.log('🚀 ~ countTask', countTask);
 
 
 Element.prototype.appendAfter = function(element) {

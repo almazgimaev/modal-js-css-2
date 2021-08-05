@@ -1,6 +1,4 @@
 
-
-
 $.addList = function(options) {
   return new Promise((resolve, reject) => {
     const modal = $.modal({
@@ -11,15 +9,14 @@ $.addList = function(options) {
       },
       footerButtons: [
         {text: 'Добавить', type: 'primary', handler() {
-          // TODO:
           const  inputTask = document.querySelector('#inputTask')
+          countTask++;
           
           const addTask = () => {
             const currentCount = countTask
             const newTask = {idCheck: currentCount, text: inputTask.value}
             tasks.push(newTask)
           }
-          countTask++;
           addTask()
           resolve()
           modal.close()
@@ -30,7 +27,6 @@ $.addList = function(options) {
         }}
       ]
     })
-
 
     setTimeout(() => {
       modal.open()

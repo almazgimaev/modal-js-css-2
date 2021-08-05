@@ -1,6 +1,12 @@
 let $ = {}
-let tasks = []
-let countTask = 0
+let tasks = [
+  {idCheck: 1, text: "dsfasfdsdafsfd"},
+  {idCheck: 2, text: "ыыцук"},
+  {idCheck: 3, text: "фыаыв"},
+  {idCheck: 4, text: "цкк3а3а"},
+]
+let countTask = tasks[tasks.length - 1].idCheck || 0
+console.log('🚀 ~ countTask', countTask);
 
 
 Element.prototype.appendAfter = function(element) {
@@ -100,8 +106,6 @@ $.modal = function(options) {
 }
 
 
-
-
 $.addList = function(options) {
   return new Promise((resolve, reject) => {
     const modal = $.modal({
@@ -112,15 +116,14 @@ $.addList = function(options) {
       },
       footerButtons: [
         {text: 'Добавить', type: 'primary', handler() {
-          // TODO:
           const  inputTask = document.querySelector('#inputTask')
+          countTask++;
           
           const addTask = () => {
             const currentCount = countTask
             const newTask = {idCheck: currentCount, text: inputTask.value}
             tasks.push(newTask)
           }
-          countTask++;
           addTask()
           resolve()
           modal.close()
@@ -132,12 +135,12 @@ $.addList = function(options) {
       ]
     })
 
-
     setTimeout(() => {
       modal.open()
     }, 100);
   })  
 }
+
 $.deleteList = function(options) {
   return new Promise((resolve, reject) => {
     const modal = $.modal({
@@ -148,9 +151,29 @@ $.deleteList = function(options) {
       },
       footerButtons: [
         {text: 'Удалить', type: 'danger', dataset: '', handler() {
-          // TODO:
-          console.log('здесь код для удаления задач из DOM');
+          
+          function _findCurrentCheckboxes() {
+              let allCheckboxes = document.getElementsByClassName('form-check-input')
+              let currentCheckboxesId = []
+              for (let i = 0; i < allCheckboxes.length; i++) {
+                if (allCheckboxes[i].checked) {
+                  currentCheckboxesId.push(allCheckboxes[i].id)
+                }
+              }
+              console.log(+currentCheckboxesId);
+              for (let i = 0; i < tasks.length; i++) {
+                for (let b = 0; b < currentCheckboxesId.length; b++) {
+                  if(tasks[i].idCheck == currentCheckboxesId[b]) {
+                    tasks.splice(i,1)
+                  }
+                } 
+              }
+          }
+          _findCurrentCheckboxes()
+          console.log(tasks);
+          render()
           resolve()
+          modal.close()
         }},
         {text: 'Отмена', type: 'secondary', dataset: 'true', handler() {
           modal.close()
@@ -183,8 +206,8 @@ $.deleteList = function(options) {
 
 
 const toHtml = task => `
-  <div class="form-check"  id="${task.idCheck}">
-    <input class="form-check-input" type="checkbox" value="">
+  <div class="form-check"  id="id${task.idCheck}">
+    <input class="form-check-input" type="checkbox" id="${task.idCheck}">
     <label class="form-check-label" for="flexCheckDefault">
       ${task.text}
     </label>
@@ -198,7 +221,7 @@ function render() {
   document.querySelector('#taskList').innerHTML = html
 }
 
-// render()
+render()
 
 
 
@@ -212,7 +235,6 @@ document.addEventListener('click', event => {
     // addList.open()
     $.addList()
       .then(() => {
-        // TODO:
         render()
       })
       .catch(() => {
@@ -223,8 +245,6 @@ document.addEventListener('click', event => {
     event.preventDefault()
     $.deleteList()
       .then(() => {
-        // TODO:
-        console.log('deleting...');
       })
       .catch(() => {
         // TODO:

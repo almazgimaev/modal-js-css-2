@@ -16,8 +16,8 @@
 
 
 const toHtml = task => `
-  <div class="form-check"  id="${task.idCheck}">
-    <input class="form-check-input" type="checkbox" value="">
+  <div class="form-check"  id="id${task.idCheck}">
+    <input class="form-check-input" type="checkbox" id="${task.idCheck}">
     <label class="form-check-label" for="flexCheckDefault">
       ${task.text}
     </label>
@@ -31,7 +31,7 @@ function render() {
   document.querySelector('#taskList').innerHTML = html
 }
 
-// render()
+render()
 
 
 
@@ -45,7 +45,6 @@ document.addEventListener('click', event => {
     // addList.open()
     $.addList()
       .then(() => {
-        // TODO:
         render()
       })
       .catch(() => {
@@ -56,8 +55,6 @@ document.addEventListener('click', event => {
     event.preventDefault()
     $.deleteList()
       .then(() => {
-        // TODO:
-        console.log('deleting...');
       })
       .catch(() => {
         // TODO:
