@@ -1,8 +1,8 @@
 let tasks = [
-  {idCheck: 1, text: "dsfasfdsdafsfd"},
-  {idCheck: 2, text: "ыыцук"},
-  {idCheck: 3, text: "фыаыв"},
-  {idCheck: 4, text: "цкк3а3а"},
+  {idCheck: 1, text: "Задача №1. Помыть полы"},
+  {idCheck: 2, text: "Задача №2. Вынести мусор"},
+  {idCheck: 3, text: "Задача №3. Помыть посуду"},
+  {idCheck: 4, text: "Задача №4. Завершить задачу с модальными окнамии на JS"},
 ]
 let countTask = tasks[tasks.length - 1].idCheck || 0
 console.log('🚀 ~ countTask', countTask);

@@ -1,9 +1,9 @@
 let $ = {}
 let tasks = [
-  {idCheck: 1, text: "dsfasfdsdafsfd"},
-  {idCheck: 2, text: "ыыцук"},
-  {idCheck: 3, text: "фыаыв"},
-  {idCheck: 4, text: "цкк3а3а"},
+  {idCheck: 1, text: "Задача №1. Помыть полы"},
+  {idCheck: 2, text: "Задача №2. Вынести мусор"},
+  {idCheck: 3, text: "Задача №3. Помыть посуду"},
+  {idCheck: 4, text: "Задача №4. Завершить задачу с модальными окнамии на JS"},
 ]
 let countTask = tasks[tasks.length - 1].idCheck || 0
 console.log('🚀 ~ countTask', countTask);
@@ -140,6 +140,25 @@ $.addList = function(options) {
     }, 100);
   })  
 }
+function _findCurrentCheckboxes() {
+  let allCheckboxes = document.getElementsByClassName('form-check-input')
+  let currentCheckboxesId = []
+  for (let i = 0; i < allCheckboxes.length; i++) {
+    if (allCheckboxes[i].checked) {
+      currentCheckboxesId.push(allCheckboxes[i].id)
+    }
+  }
+  console.log(+currentCheckboxesId);
+  for (let i = 0; i < tasks.length; i++) {
+    for (let b = 0; b < currentCheckboxesId.length; b++) {
+      if(tasks[i].idCheck === +currentCheckboxesId[b]) {
+        tasks.splice(i,1)
+      }
+    } 
+  }
+}
+
+
 
 $.deleteList = function(options) {
   return new Promise((resolve, reject) => {
@@ -151,24 +170,6 @@ $.deleteList = function(options) {
       },
       footerButtons: [
         {text: 'Удалить', type: 'danger', dataset: '', handler() {
-          
-          function _findCurrentCheckboxes() {
-              let allCheckboxes = document.getElementsByClassName('form-check-input')
-              let currentCheckboxesId = []
-              for (let i = 0; i < allCheckboxes.length; i++) {
-                if (allCheckboxes[i].checked) {
-                  currentCheckboxesId.push(allCheckboxes[i].id)
-                }
-              }
-              console.log(+currentCheckboxesId);
-              for (let i = 0; i < tasks.length; i++) {
-                for (let b = 0; b < currentCheckboxesId.length; b++) {
-                  if(tasks[i].idCheck == currentCheckboxesId[b]) {
-                    tasks.splice(i,1)
-                  }
-                } 
-              }
-          }
           _findCurrentCheckboxes()
           console.log(tasks);
           render()
@@ -189,26 +190,11 @@ $.deleteList = function(options) {
   })  
 }
 
-// const addList = $.modal({
-  //   title: 'Добавить задание',
-  //   content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
-  //   footerButtons: [
-    //     {text: 'Добавить', type: 'primary', handler() {
-      //       // TODO:
-      //       console.log('здесь код дял добавления задачи в DOM');
-      //     }},
-      //     {text: 'Отмена', type: 'secondary', handler() {
-        //       addList.close()
-        //     }}
-        //   ]
-        // })
-        
-
 
 const toHtml = task => `
   <div class="form-check"  id="id${task.idCheck}">
     <input class="form-check-input" type="checkbox" id="${task.idCheck}">
-    <label class="form-check-label" for="flexCheckDefault">
+    <label class="form-check-label" for="flexCheckDefault" data-btn="label${task.idCheck}">
       ${task.text}
     </label>
   </div>
@@ -250,6 +236,15 @@ document.addEventListener('click', event => {
         // TODO:
         console.log('canceled.');
       })
-  }
+  } 
 })
+
+let tasksList = document.getElementsByClassName('form-check-label')
+
+for (let i = 0; i < tasksList.length; i++) {
+  console.log(tasksList[i]);
+  tasksList[i].addEventListener('click', el => {
+    el.path[0].classList.toggle('line-through')
+  })
+}
 

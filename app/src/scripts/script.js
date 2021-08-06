@@ -1,24 +1,9 @@
 
-// const addList = $.modal({
-  //   title: 'Добавить задание',
-  //   content: `<textarea class="input" placeholder="Введите задачу" style="width: 100%; padding: 5px 10px"></textarea>`,
-  //   footerButtons: [
-    //     {text: 'Добавить', type: 'primary', handler() {
-      //       // TODO:
-      //       console.log('здесь код дял добавления задачи в DOM');
-      //     }},
-      //     {text: 'Отмена', type: 'secondary', handler() {
-        //       addList.close()
-        //     }}
-        //   ]
-        // })
-        
-
 
 const toHtml = task => `
   <div class="form-check"  id="id${task.idCheck}">
     <input class="form-check-input" type="checkbox" id="${task.idCheck}">
-    <label class="form-check-label" for="flexCheckDefault">
+    <label class="form-check-label" for="flexCheckDefault" data-btn="label${task.idCheck}">
       ${task.text}
     </label>
   </div>
@@ -60,6 +45,15 @@ document.addEventListener('click', event => {
         // TODO:
         console.log('canceled.');
       })
-  }
+  } 
 })
+
+let tasksList = document.getElementsByClassName('form-check-label')
+
+for (let i = 0; i < tasksList.length; i++) {
+  console.log(tasksList[i]);
+  tasksList[i].addEventListener('click', el => {
+    el.path[0].classList.toggle('line-through')
+  })
+}
 
