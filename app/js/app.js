@@ -1,12 +1,12 @@
 let $ = {}
 let tasks = [
-  {idCheck: 1, text: "Задача №1. Помыть полы"},
-  {idCheck: 2, text: "Задача №2. Вынести мусор"},
-  {idCheck: 3, text: "Задача №3. Помыть посуду"},
-  {idCheck: 4, text: "Задача №4. Завершить задачу с модальными окнамии на JS"},
+  {idCheck: 1, text: "Задача №1. Помыть полы", textDecoration: 'line-through'},
+  {idCheck: 2, text: "Задача №2. Вынести мусор", textDecoration: ''},
+  {idCheck: 3, text: "Задача №3. Помыть посуду", textDecoration: ''},
+  {idCheck: 4, text: "Задача №4. Завершить задачу с модальными окнамии на JS", textDecoration: ''},
 ]
 let countTask = tasks[tasks.length - 1].idCheck || 0
-console.log('🚀 ~ countTask', countTask);
+// console.log('🚀 ~ countTask', countTask);
 
 
 Element.prototype.appendAfter = function(element) {
@@ -194,7 +194,7 @@ $.deleteList = function(options) {
 const toHtml = task => `
   <div class="form-check"  id="id${task.idCheck}">
     <input class="form-check-input" type="checkbox" id="${task.idCheck}">
-    <label class="form-check-label" for="flexCheckDefault" data-btn="label${task.idCheck}">
+    <label class="form-check-label" for="flexCheckDefault" data-label="label${task.idCheck}" style="text-decoration: ${task.textDecoration}">
       ${task.text}
     </label>
   </div>
@@ -212,9 +212,9 @@ render()
 
 
 document.addEventListener('click', event => {
-
   
   const btnType = event.target.dataset.btn
+  const labelType = event.target.dataset.label
   
   if(btnType === 'add') {
     event.preventDefault()
@@ -236,15 +236,24 @@ document.addEventListener('click', event => {
         // TODO:
         console.log('canceled.');
       })
-  } 
+  } else if (labelType && labelType.match('label')) { 
+      const labelId = +labelType.split('').slice(5, labelType.split('').length)
+      // FIXME: понять как написать нормально и читаемо, иначе черт ногу сломит 
+
+      const filteredTask = tasks.filter(task => task.idCheck === labelId)
+      const filteredId = filteredTask[0].idCheck
+      for (let i = 0; i < tasks.length; i++) {
+        if (tasks[i].idCheck === filteredId) {
+          if (tasks[i].textDecoration == "line-through") {
+            tasks[i].textDecoration = ''
+          } else {
+            tasks[i].textDecoration = "line-through"
+          }
+        }
+      }
+    
+      render()
+
+  }
+    
 })
-
-let tasksList = document.getElementsByClassName('form-check-label')
-
-for (let i = 0; i < tasksList.length; i++) {
-  console.log(tasksList[i]);
-  tasksList[i].addEventListener('click', el => {
-    el.path[0].classList.toggle('line-through')
-  })
-}
-

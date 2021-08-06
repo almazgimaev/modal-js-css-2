@@ -1,11 +1,11 @@
 let tasks = [
-  {idCheck: 1, text: "Задача №1. Помыть полы"},
-  {idCheck: 2, text: "Задача №2. Вынести мусор"},
-  {idCheck: 3, text: "Задача №3. Помыть посуду"},
-  {idCheck: 4, text: "Задача №4. Завершить задачу с модальными окнамии на JS"},
+  {idCheck: 1, text: "Задача №1. Помыть полы", textDecoration: 'line-through'},
+  {idCheck: 2, text: "Задача №2. Вынести мусор", textDecoration: ''},
+  {idCheck: 3, text: "Задача №3. Помыть посуду", textDecoration: ''},
+  {idCheck: 4, text: "Задача №4. Завершить задачу с модальными окнамии на JS", textDecoration: ''},
 ]
 let countTask = tasks[tasks.length - 1].idCheck || 0
-console.log('🚀 ~ countTask', countTask);
+// console.log('🚀 ~ countTask', countTask);
 
 
 Element.prototype.appendAfter = function(element) {
